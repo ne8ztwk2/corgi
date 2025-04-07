@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "安装 requirements.txt 中的依赖..."
-pip install -r requirements.txt
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 echo "安装 Playwright 和相关浏览器依赖..."
 playwright install --with-deps
