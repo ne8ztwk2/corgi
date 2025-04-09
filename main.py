@@ -9,7 +9,7 @@ docker run \
     -v "$(pwd)/logs:/corgi/logs" \
     --name corgi \
     corgi:latest
-运行过程的截图会放到 $(pwd)/web/screenshots/ 目录下
+运行过程的截图会放到 $(pwd)/screenshots/ 目录下
 
 
 """
