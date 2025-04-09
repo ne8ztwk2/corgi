@@ -1,26 +1,49 @@
-from playwright.sync_api import Page
+from abc import ABC, abstractmethod
+
+from config import UI_MAX_WAIT_TIME, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
 
 
+class Basepage(ABC):
+    max_wait_time = UI_MAX_WAIT_TIME
+    time_format = TIME_FORMAT
+    screenshot_dir = UI_SCREENSHOT_ABS_DIR
 
-class Basepage:
-
-    def __init__(self, page: Page):
-        self.driver = driver
-
-    def find_element(self, locator):
+    @abstractmethod
+    def goto(self, url: str):
         pass
 
-    def click(self, locator: tuple):
+    @abstractmethod
+    def click(self, selector: str):
         pass
 
-    def send_keys(self, locator, text):
+    @abstractmethod
+    def input(self, selector: str, text):
         pass
 
-    def get_text(self, locator):
+    @abstractmethod
+    def text(self, selector: str) -> str | None:
         pass
 
-    def is_visible(self, locator):
+    @abstractmethod
+    def text_content(self, selector: str) -> str | None:
         pass
 
-    def take_screenshot(self, name: str = "enshot"):
+    @abstractmethod
+    def is_visible(self, selector: str) -> bool:
         pass
+
+    @abstractmethod
+    def screenshot(self, filename: str):
+        pass
+
+    @abstractmethod
+    def get_attribute(self, selector: str, attribute: str) -> str:
+        pass
+
+    @abstractmethod
+    def get_title(self) -> str:
+        pass
+
+
+if __name__ == "__main__":
+    print(Basepage.max_wait_time)
