@@ -50,4 +50,9 @@ class BaseSeleniumPage(Basepage):
 
     def get_title(self) -> str:
         return self.driver.title
-    
+
+    def close(self):
+        self.driver.close()
+
+    def quit(self):
+        self.driver.quit()

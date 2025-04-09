@@ -1,12 +1,17 @@
-from selenium.webdriver.common.by import By
+"""
+# 构建docker镜像
+cd corgi
+docker build -t corgi:latest .
 
-from selenium import webdriver
+# 运行docker容器
+docker run \
+    -v "$(pwd)/screenshots:/corgi/screenshots" \
+    -v "$(pwd)/logs:/corgi/logs" \
+    --name corgi \
+    corgi:latest
+运行过程的截图会放到 $(pwd)/web/screenshots/ 目录下
 
-driver = webdriver.Firefox()
-driver.get("https://www.uitestingplayground.com/dynamicid")
 
-ele = driver.find_element(By.CSS_SELECTOR, ".btn.btn-primary")
+"""
 
-print(ele.text)
-print(ele.get_attribute("id"))
-driver.quit()
+print("hello world")

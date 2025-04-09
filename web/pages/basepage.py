@@ -44,6 +44,14 @@ class Basepage(ABC):
     def get_title(self) -> str:
         pass
 
+    @abstractmethod
+    def close(self):
+        pass
+
+    @abstractmethod
+    def quit(self):
+        pass
+
 
 if __name__ == "__main__":
     print(Basepage.max_wait_time)
