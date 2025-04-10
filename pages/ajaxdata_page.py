@@ -1,0 +1,15 @@
+from pages.base_page import BasePage
+
+
+class AjaxdataPage:
+    def __init__(self, page: BasePage):
+        self.page = page
+        self.url = "https://www.uitestingplayground.com/ajax"
+        self.ajax_button_selector = "#ajaxButton"
+        self.ajax_response_selector = ".bg-success"
+
+    def click_button(self):
+        self.page.click(self.ajax_button_selector)
+
+    def wait_for_ajax_response(self):
+        self.page.wait_visible(self.ajax_response_selector)

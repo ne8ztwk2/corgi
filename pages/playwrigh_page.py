@@ -1,9 +1,9 @@
 import time
 from playwright.sync_api import Page
-from basepage import Basepage
+from pages.base_page import BasePage
 
 
-class PlaywrightPage(Basepage):
+class PlaywrightPage(BasePage):
 
     def __init__(self, page: Page):
         self.page = page
@@ -18,11 +18,11 @@ class PlaywrightPage(Basepage):
         return self.page.locator(selector=selector).fill(text)
 
     @property
-    def text(self, selector: str) -> str:
+    def get_text(self, selector: str) -> str:
         return self.page.locator(selector=selector).inner_text()
 
     @property
-    def text_content(self, selector: str) -> str:
+    def get_text_content(self, selector: str) -> str:
         return self.page.locator(selector=selector).text_content()
 
     def is_visible(self, selector: str) -> bool:
@@ -30,15 +30,12 @@ class PlaywrightPage(Basepage):
 
     def screenshot(self, filename: str) -> None:
         return self.page.screenshot(
-            path=
-            f"{self.screenshot_dir}{time.strftime(self.strftime, time.localtime())} {filename}.png"
+            path=f"{self.screenshot_dir}{time.strftime(self.strftime, time.localtime())} {filename}.png"
         )
 
     def get_attribute(self, selector: str, attribute: str) -> str:
         return self.page.locator(selector=selector).get_attribute(attribute)
 
-
-    
 
 if __name__ == "__main__":
 

@@ -2,11 +2,11 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from basepage import Basepage
+from pages.base_page import BasePage
 import time
 
 
-class BaseSeleniumPage(Basepage):
+class SeleniumPage(BasePage):
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -18,21 +18,27 @@ class BaseSeleniumPage(Basepage):
 
     def click(self, selector: str):
         WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))).click()
+            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
+        ).click()
 
     def input(self, selector: str, text: str):
         WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, selector))).send_keys(text)
+            EC.visibility_of_element_located((By.CSS_SELECTOR, selector))
+        ).send_keys(text)
 
-    def text(self, selector: str) -> str | None:
-        return WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, selector))).text
+    def get_text(self, selector: str) -> str | None:
+        return (
+            WebDriverWait(self.driver, self.max_wait_time)
+            .until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+            .text
+        )
 
-    def text_content(self, selector: str) -> str | None:
-        return WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, selector))).get_attribute("textContent")
+    def get_text_content(self, selector: str) -> str | None:
+        return (
+            WebDriverWait(self.driver, self.max_wait_time)
+            .until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+            .get_attribute("textContent")
+        )
 
     def screenshot(self, filename: str):
         self.driver.save_screenshot(
@@ -40,13 +46,16 @@ class BaseSeleniumPage(Basepage):
         )
 
     def get_attribute(self, selector: str, attribute: str) -> str:
-        return WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, selector))).get_attribute(attribute)
+        return (
+            WebDriverWait(self.driver, self.max_wait_time)
+            .until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+            .get_attribute(attribute)
+        )
 
     def is_visible(self, selector: str) -> bool:
         WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.visibility_of((By.CSS_SELECTOR, selector))).is_displayed()
+            EC.visibility_of((By.CSS_SELECTOR, selector))
+        ).is_displayed()
 
     def get_title(self) -> str:
         return self.driver.title

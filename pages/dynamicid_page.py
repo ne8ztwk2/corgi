@@ -1,9 +1,9 @@
-from basepage import Basepage
+from pages.base_page import BasePage
 
 
 class DynamicidPage:
 
-    def __init__(self, page: Basepage):
+    def __init__(self, page: BasePage):
 
         self.url = "https://www.uitestingplayground.com/dynamicid"
         self.page = page
@@ -12,7 +12,7 @@ class DynamicidPage:
 
     @property
     def get_button_id(self) -> str:
-        print(self.page.text(self.button_selector))
+        print(self.page.get_text(self.button_selector))
         return self.page.get_attribute(self.button_selector, "id")
 
     @property
