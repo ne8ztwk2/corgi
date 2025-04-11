@@ -5,9 +5,11 @@ class ClientdelayPage:
     def __init__(self, page: BasePage):
         self.page = page
         self.ajax_button_selector = "#ajaxButton"
+        self.response_selector = ".bg-success"
+        self.wait_response_time = 16
 
-    def click_trigger_button(self):
+    def click_ajax_button(self):
         self.page.click(self.ajax_button_selector)
 
-    def wait_for_client_response(self):
-        self.page.wait_for_selector("#content")
+    def wait_response(self):
+        self.page.wait_visible(self.response_selector, self.wait_response_time)
