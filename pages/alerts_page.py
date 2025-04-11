@@ -10,4 +10,4 @@ class AlertsPage:
         self.prompt_button_selector = "#promptButton"
 
     def trigger_alert(self):
-        self.page.click("#alertButton")
+        self.page.click(self.alert_button_selector)

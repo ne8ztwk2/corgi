@@ -4,7 +4,7 @@ from classattr_page import ClassattrPage
 from hiddenlayers_page import HiddenlayersPage
 from loaddelay_page import LoaddelayPage
 from pages.ajaxdata_page import AjaxPage
-from clientdelay_page import ClientdelayPage
+from clientsidedelay_page import ClientdelayPage
 from click_page import ClickPage
 from textinput_page import TextinputPage
 from scrollbars_page import ScrollbarsPage
