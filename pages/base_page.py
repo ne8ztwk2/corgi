@@ -89,6 +89,12 @@ class BasePage(ABC):
     @abstractmethod
     def select_by_text(self, selector: str, text: str): ...
 
+    @abstractmethod
+    def find(self, selector: str) -> WebElement | Locator: ...
+
+    @abstractmethod
+    def find_all(self, selector: str) -> list[WebElement] | list[Locator]: ...
+
 
 if __name__ == "__main__":
     print(BasePage.max_wait_time)

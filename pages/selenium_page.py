@@ -27,12 +27,10 @@ class SeleniumPage(BasePage):
         self.wait_editable(selector).send_keys(text)
 
     def get_text(self, selector: str) -> str | None:
-        return self.driver.find_element(By.CSS_SELECTOR, selector).text
+        return self.find(selector).text
 
     def get_text_content(self, selector: str) -> str | None:
-        return self.driver.find_element(By.CSS_SELECTOR, selector).get_attribute(
-            "textContent"
-        )
+        return self.find(selector).get_attribute("textContent")
 
     def screenshot(self, filename: str):
         self.driver.save_screenshot(
@@ -40,10 +38,10 @@ class SeleniumPage(BasePage):
         )
 
     def get_attribute(self, selector: str, attribute: str) -> str | None:
-        self.driver.find_element(By.CSS_SELECTOR, selector).get_attribute(attribute)
+        self.find(selector).get_attribute(attribute)
 
     def is_visible(self, selector: str) -> bool:
-        return self.driver.find_element(By.CSS_SELECTOR, selector).is_displayed()
+        return self.find(selector).is_displayed()
 
     def get_title(self) -> str:
         return self.driver.title
@@ -74,23 +72,23 @@ class SeleniumPage(BasePage):
 
     def wait_visible(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
-            EC.visibility_of((By.CSS_SELECTOR, selector))
+            EC.visibility_of((selector))
         )
 
     def wait_enable(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
-            self.__element_is_enable(By.CSS_SELECTOR, selector)
+            self.__element_is_enable(selector)
         )
 
     def wait_editable(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
-            self.__element_is_editable(By.CSS_SELECTOR, selector)
+            self.__element_is_editable(selector)
         )
 
     def __element_is_editable(self, selector: str) -> bool:
-        def _predicate(driver) -> bool:
+        def _predicate() -> bool:
             try:
-                element: WebElement = driver.find_element(By.CSS_SELECTOR, selector)
+                element: WebElement = self.find(selector)
                 return (
                     element.is_displayed()
                     and element.is_enabled()
@@ -102,9 +100,9 @@ class SeleniumPage(BasePage):
         return _predicate
 
     def __element_is_enable(self, selector: str) -> bool:
-        def _predicate(driver) -> bool:
+        def _predicate() -> bool:
             try:
-                element: WebElement = driver.find_element(By.CSS_SELECTOR, selector)
+                element: WebElement = self.find(selector)
                 return element.is_enabled()
             except:
                 return False
@@ -113,7 +111,7 @@ class SeleniumPage(BasePage):
 
     def wait_clickable(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
+            EC.element_to_be_clickable((selector))
         )
 
     def wait_non_zreo_size(
@@ -124,11 +122,9 @@ class SeleniumPage(BasePage):
         )
 
     def __element_is_non_zreo_size(self, selector: str) -> bool:
-        def _predicate(driver) -> bool:
+        def _predicate() -> bool:
             try:
-                element_size: WebElement = driver.find_element(
-                    By.CSS_SELECTOR, selector
-                ).size
+                element_size: WebElement = self.find(selector).size
                 return element_size["width"] > 0 and element_size["height"] > 0
             except:
                 return False
@@ -136,16 +132,16 @@ class SeleniumPage(BasePage):
         return _predicate
 
     def select_by_value(self, selector: str, value: str):
-        Select(self.driver.find_element(By.CSS_SELECTOR, selector)).select_by_value(
-            value
-        )
+        Select(self.find(selector)).select_by_value(value)
 
     def select_by_index(self, selector: str, index: int):
-        Select(self.driver.find_element(By.CSS_SELECTOR, selector)).select_by_index(
-            index
-        )
+        Select(self.find(selector)).select_by_index(index)
 
     def select_by_text(self, selector: str, text: str):
-        Select(
-            self.driver.find_element(By.CSS_SELECTOR, selector)
-        ).select_by_visible_text(text)
+        Select(self.find(selector)).select_by_visible_text(text)
+
+    def find(self, selector: str) -> WebElement:
+        return self.driver.find_element(selector)
+
+    def find_all(self, selector: str) -> list[WebElement]:
+        return self.driver.find_elements(selector)
