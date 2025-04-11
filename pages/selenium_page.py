@@ -23,27 +23,15 @@ class SeleniumPage(BasePage):
     def click(self, selector: str):
         self.wait_clickable(selector).click()
 
-        WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
-        ).click()
-
     def input(self, selector: str, text: str):
-        WebDriverWait(self.driver, self.max_wait_time).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, selector))
-        ).send_keys(text)
+        self.wait_editable(selector).send_keys(text)
 
     def get_text(self, selector: str) -> str | None:
-        return (
-            WebDriverWait(self.driver, self.max_wait_time)
-            .until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-            .text
-        )
+        return self.driver.find_element(By.CSS_SELECTOR, selector).text
 
     def get_text_content(self, selector: str) -> str | None:
-        return (
-            WebDriverWait(self.driver, self.max_wait_time)
-            .until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-            .get_attribute("textContent")
+        return self.driver.find_element(By.CSS_SELECTOR, selector).get_attribute(
+            "textContent"
         )
 
     def screenshot(self, filename: str):
@@ -52,11 +40,7 @@ class SeleniumPage(BasePage):
         )
 
     def get_attribute(self, selector: str, attribute: str) -> str:
-        return (
-            WebDriverWait(self.driver, self.max_wait_time)
-            .until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-            .get_attribute(attribute)
-        )
+        self.driver.find_element(By.CSS_SELECTOR, selector).get_attribute(attribute)
 
     def is_visible(self, selector: str) -> bool:
         return self.driver.find_element(By.CSS_SELECTOR, selector).is_displayed()
@@ -88,17 +72,17 @@ class SeleniumPage(BasePage):
         else:
             Alert(self.driver).dismiss()
 
-    def wait_visible(self, selector: str, max_wait_time: int = None) -> WebDriverWait:
+    def wait_visible(self, selector: str, max_wait_time: int = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             EC.visibility_of((By.CSS_SELECTOR, selector))
         )
 
-    def wait_enable(self, selector: str, max_wait_time: int = None) -> WebDriverWait:
+    def wait_enable(self, selector: str, max_wait_time: int = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             self.__element_is_enable(By.CSS_SELECTOR, selector)
         )
 
-    def wait_editable(self, selector: str, max_wait_time: int = None) -> WebDriverWait:
+    def wait_editable(self, selector: str, max_wait_time: int = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             self.__element_is_editable(By.CSS_SELECTOR, selector)
         )
@@ -127,14 +111,14 @@ class SeleniumPage(BasePage):
 
         return _predicate
 
-    def wait_clickable(self, selector: str, max_wait_time: int = None) -> WebDriverWait:
+    def wait_clickable(self, selector: str, max_wait_time: int = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
         )
 
     def wait_non_zreo_size(
         self, selector: str, max_wait_time: int = None
-    ) -> WebDriverWait:
+    ) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             self.__element_is_non_zreo_size(selector)
         )

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Literal, Self, Any
-
+from typing import Literal, Any
+from selenium.webdriver.remote.webelement import WebElement
+from playwright.sync_api import Locator
 from config import UI_MAX_WAIT_TIME, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
 
 
@@ -55,19 +56,29 @@ class BasePage(ABC):
     def execute_script(self, script: str) -> Any: ...
 
     @abstractmethod
-    def wait_visible(self, selector: str, max_wait_time: int = None) -> Self: ...
+    def wait_visible(
+        self, selector: str, max_wait_time: int = None
+    ) -> WebElement | Locator: ...
 
     @abstractmethod
-    def wait_enable(self, selector: str, max_wait_time: int = None) -> Self: ...
+    def wait_enable(
+        self, selector: str, max_wait_time: int = None
+    ) -> WebElement | Locator: ...
 
     @abstractmethod
-    def wait_editable(self, selector: str, max_wait_time: int = None) -> Self: ...
+    def wait_editable(
+        self, selector: str, max_wait_time: int = None
+    ) -> WebElement | Locator: ...
 
     @abstractmethod
-    def wait_clickable(self, selector: str, max_wait_time: int = None) -> Self: ...
+    def wait_clickable(
+        self, selector: str, max_wait_time: int = None
+    ) -> WebElement | Locator: ...
 
     @abstractmethod
-    def wait_non_zreo_size(self, selector: str, max_wait_time: int = None) -> Self: ...
+    def wait_non_zreo_size(
+        self, selector: str, max_wait_time: int = None
+    ) -> WebElement | Locator: ...
 
     @abstractmethod
     def select_by_value(self, selector: str, value: str): ...
