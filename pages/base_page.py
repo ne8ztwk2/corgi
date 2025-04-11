@@ -57,27 +57,27 @@ class BasePage(ABC):
 
     @abstractmethod
     def wait_visible(
-        self, selector: str, max_wait_time: int = None
+        self, selector: str, max_wait_time: float = None
     ) -> WebElement | Locator: ...
 
     @abstractmethod
     def wait_enable(
-        self, selector: str, max_wait_time: int = None
+        self, selector: str, max_wait_time: float = None
     ) -> WebElement | Locator: ...
 
     @abstractmethod
     def wait_editable(
-        self, selector: str, max_wait_time: int = None
+        self, selector: str, max_wait_time: float = None
     ) -> WebElement | Locator: ...
 
     @abstractmethod
     def wait_clickable(
-        self, selector: str, max_wait_time: int = None
+        self, selector: str, max_wait_time: float = None
     ) -> WebElement | Locator: ...
 
     @abstractmethod
     def wait_non_zreo_size(
-        self, selector: str, max_wait_time: int = None
+        self, selector: str, max_wait_time: float = None
     ) -> WebElement | Locator: ...
 
     @abstractmethod

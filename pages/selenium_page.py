@@ -72,17 +72,17 @@ class SeleniumPage(BasePage):
         else:
             Alert(self.driver).dismiss()
 
-    def wait_visible(self, selector: str, max_wait_time: int = None) -> WebElement:
+    def wait_visible(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             EC.visibility_of((By.CSS_SELECTOR, selector))
         )
 
-    def wait_enable(self, selector: str, max_wait_time: int = None) -> WebElement:
+    def wait_enable(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             self.__element_is_enable(By.CSS_SELECTOR, selector)
         )
 
-    def wait_editable(self, selector: str, max_wait_time: int = None) -> WebElement:
+    def wait_editable(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             self.__element_is_editable(By.CSS_SELECTOR, selector)
         )
@@ -111,13 +111,13 @@ class SeleniumPage(BasePage):
 
         return _predicate
 
-    def wait_clickable(self, selector: str, max_wait_time: int = None) -> WebElement:
+    def wait_clickable(self, selector: str, max_wait_time: float = None) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
         )
 
     def wait_non_zreo_size(
-        self, selector: str, max_wait_time: int = None
+        self, selector: str, max_wait_time: float = None
     ) -> WebElement:
         return WebDriverWait(self.driver, max_wait_time or self.max_wait_time).until(
             self.__element_is_non_zreo_size(selector)
