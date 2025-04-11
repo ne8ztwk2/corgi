@@ -14,9 +14,10 @@ class AutowaitPage:
         self.applyButton5_selector = "#applyButton5"
         self.applyButton10_selector = "#applyButton10"
         self.target_selector = "#target"
+        self.type_selector = "#element-type"
 
     def choose_element_type(self, type: str):
-        self.page.select("#selectType", type)
+        self.page.select(self.select_type_selector, type)
 
     def select_visible(self):
         self.page.click(self.visible_checkbox_selector)
