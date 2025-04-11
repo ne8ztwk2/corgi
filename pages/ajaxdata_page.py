@@ -9,7 +9,7 @@ class AjaxdataPage:
         self.ajax_response_selector = ".bg-success"
 
     def click_button(self):
-        self.page.click(self.ajax_button_selector)
+        self.page.find(self.ajax_button_selector).click()
 
     def wait_for_ajax_response(self):
-        self.page.wait_visible(self.ajax_response_selector)
+        self.page.find(self.ajax_response_selector).wait_visible()

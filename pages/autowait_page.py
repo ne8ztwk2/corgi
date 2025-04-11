@@ -17,31 +17,31 @@ class AutowaitPage:
         self.type_selector = "#element-type"
 
     def choose_element_type(self, type: str):
-        self.page.select(self.select_type_selector, type)
+        self.page.find(self.type_selector).select_by_value(type)
 
     def select_visible(self):
-        self.page.click(self.visible_checkbox_selector)
+        self.page.find(self.visible_checkbox_selector).click()
 
     def select_enabled(self):
-        self.page.click(self.enable_checkbox_selector)
+        self.page.find(self.enable_checkbox_selector).click()
 
     def select_editable(self):
-        self.page.click(self.editable_checkbox_selector)
+        self.page.find(self.editable_checkbox_selector).click()
 
     def select_ontop(self):
-        self.page.click(self.ontop_checkbox_selector)
+        self.page.find(self.ontop_checkbox_selector).click()
 
     def select_nonzero(self):
-        self.page.click(self.nonzero_checkbox_selector)
+        self.page.find(self.nonzero_checkbox_selector).click()
 
     def click_apply_button3(self):
-        self.page.click(self.applyButton3_selector)
+        self.page.find(self.applyButton3_selector).click()
 
     def click_apply_button5(self):
-        self.page.click(self.applyButton5_selector)
+        self.page.find(self.applyButton5_selector).click()
 
     def click_apply_button10(self):
-        self.page.click(self.applyButton10_selector)
+        self.page.find(self.applyButton10_selector).click()
 
-    def choose_target_item(self, item: str):
-        self.page.select(self.target_selector, item)
+    def choose_target_item(self, value: str):
+        self.page.find(self.target_selector, value).select_by_value(value)
