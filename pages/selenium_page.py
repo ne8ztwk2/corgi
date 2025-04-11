@@ -39,7 +39,7 @@ class SeleniumPage(BasePage):
             f"{self.screenshot_dir}{time.strftime(self.strftime, time.localtime())} {filename}.png"
         )
 
-    def get_attribute(self, selector: str, attribute: str) -> str:
+    def get_attribute(self, selector: str, attribute: str) -> str | None:
         self.driver.find_element(By.CSS_SELECTOR, selector).get_attribute(attribute)
 
     def is_visible(self, selector: str) -> bool:
