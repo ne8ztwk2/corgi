@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Literal, Self
+from typing import Literal, Self, Any
 
 from config import UI_MAX_WAIT_TIME, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
 
@@ -52,7 +52,7 @@ class BasePage(ABC):
     def get_alert_text(self) -> str: ...
 
     @abstractmethod
-    def execute_script(self, script: str): ...
+    def execute_script(self, script: str) -> Any: ...
 
     @abstractmethod
     def wait_visible(self, selector: str, max_wait_time: int = None) -> Self: ...
@@ -70,7 +70,13 @@ class BasePage(ABC):
     def wait_non_zreo_size(self, selector: str, max_wait_time: int = None) -> Self: ...
 
     @abstractmethod
-    def select(self, selector: str, value: str): ...
+    def select_by_value(self, selector: str, value: str): ...
+
+    @abstractmethod
+    def select_by_index(self, selector: str, index: int): ...
+
+    @abstractmethod
+    def select_by_text(self, selector: str, text: str): ...
 
 
 if __name__ == "__main__":
