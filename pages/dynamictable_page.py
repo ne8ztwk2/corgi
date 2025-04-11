@@ -3,7 +3,8 @@ from pages.base_page import BasePage
 
 class DynamictablePage:
     def __init__(self, page: BasePage):
-        super().__init__(page)
+        self.url = "https://www.uitestingplayground.com/dynamictable"
+        self.page = page
 
-    def get_table_data(self):
-        return self.page.get_text("#table")
+    def get_chrome_cpu_data(self):
+        ...

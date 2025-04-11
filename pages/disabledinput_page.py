@@ -3,6 +3,7 @@ from pages.base_page import BasePage
 
 class DisabledinputPage:
     def __init__(self, page: BasePage):
+        self.url = "https://www.uitestingplayground.com/disabledinput"
         self.page = page
         self.input_selector = "#inputField"
         self.min_need_time = 5.5
