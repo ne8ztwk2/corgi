@@ -212,6 +212,9 @@ class SeleniumElement(BaseElement):
     def select_by_text(self, text: str):
         Select(self.element).select_by_visible_text(text)
 
+    def scrolled_into_view(self) -> dict:
+        return self.element.location_once_scrolled_into_view
+
     # actions
 
     def move(self):

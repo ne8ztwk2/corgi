@@ -156,6 +156,9 @@ class BaseElement(ABC):
     @abstractmethod
     def click_hold(self): ...
 
+    @abstractmethod
+    def scrolled_into_view(self) -> dict: ...
+
 
 class BasePage(ABC):
     time_format = TIME_FORMAT
