@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pages.base_page import BasePage, BaseElement, BaseActions
+from pages.base_page import BasePage, BaseElement
 import time
 from typing import Literal, Self, Any
 from selenium.webdriver.remote.webelement import WebElement
@@ -176,29 +176,29 @@ class SeleniumElement(BaseElement):
     def is_visible(self) -> bool:
         return self.element.is_displayed()
 
-    def wait_visible(self, timeout: float = None) -> WebElement:
+    def wait_visible(self, timeout: float = None) -> Self:
         return WebDriverWait(self.driver, timeout or self.timeout).until(
             EC.visibility_of(self.element)
         )
 
-    def wait_enable(self, timeout: float = None) -> WebElement:
+    def wait_enable(self, timeout: float = None) -> Self:
         return WebDriverWait(self.driver, timeout or self.timeout).until(
             self.element.is_enabled()
         )
 
-    def wait_editable(self, timeout: float = None) -> WebElement:
+    def wait_editable(self, timeout: float = None) -> Self:
         return WebDriverWait(self.driver, timeout or self.timeout).until(
             self.self.element.is_displayed()
             and self.element.is_enabled()
             and self.element.get_attribute("readonly") is None
         )
 
-    def wait_clickable(self, timeout: float = None) -> WebElement:
+    def wait_clickable(self, timeout: float = None) -> Self:
         return WebDriverWait(self.driver, timeout or self.timeout).until(
             EC.element_to_be_clickable(self.element)
         )
 
-    def wait_non_zreo_size(self, timeout: float = None) -> WebElement:
+    def wait_non_zreo_size(self, timeout: float = None) -> Self:
         return WebDriverWait(self.driver, timeout or self.timeout).until(
             self.element_size["width"] > 0 and self.element_size["height"] > 0
         )
@@ -212,8 +212,9 @@ class SeleniumElement(BaseElement):
     def select_by_text(self, text: str):
         Select(self.element).select_by_visible_text(text)
 
-    def scrolled_into_view(self) -> dict:
-        return self.element.location_once_scrolled_into_view
+    def scroll_into_view(self) -> Self:
+        self.element.location_once_scrolled_into_view
+        return self
 
     # actions
 
