@@ -3,12 +3,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pages.base_page import BasePage, BaseElement, BasePage2
+from pages.base_page import BasePage, BaseElement, BaseActions
 import time
 from typing import Literal, Self, Any
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import Select
 
+from selenium.webdriver.common.action_chains import ActionChains
 
 # class SeleniumPage(BasePage):
 
@@ -152,9 +153,10 @@ from selenium.webdriver.support.ui import Select
 
 class SeleniumElement(BaseElement):
 
-    def __init__(self, element: WebElement):
+    def __init__(self, element: WebElement, actions: ActionChains):
         self.element = element
         self.timeout = 8
+        self.actions = actions
 
     def click(self):
         self.element.click()
@@ -210,6 +212,23 @@ class SeleniumElement(BaseElement):
     def select_by_text(self, text: str):
         Select(self.element).select_by_visible_text(text)
 
+    # actions
+
+    def move(self):
+        self.actions.move_to_element(self.element).perform()
+
+    def drag_to(self, target: WebElement):
+        self.actions.drag_and_drop(self.element, target).perform()
+
+    def double_click(self):
+        self.actions.double_click(self.element).perform()
+
+    def right_click(self):
+        self.actions.context_click(self.element).perform()
+
+    def click_hold(self):
+        self.actions.click_and_hold(self.element).perform()
+
 
 class SeleniumPage(BasePage):
 
@@ -257,3 +276,6 @@ class SeleniumPage(BasePage):
 
     def find_all(self, selector: str) -> list[SeleniumElement]:
         return [SeleniumElement(self.driver.find_element(By.CSS_SELECTOR, selector))]
+
+    def actions(self, selector: str) -> SeleniumElement:
+        return SeleniumElement(self.driver.find_element(By.CSS_SELECTOR, selector))
