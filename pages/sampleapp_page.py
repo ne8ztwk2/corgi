@@ -3,9 +3,21 @@ from pages.base_page import BasePage
 
 class SampleappPage:
     def __init__(self, page: BasePage):
-        super().__init__(page)
+        self.page = page
+        self.url = "https://www.uitestingplayground.com/sampleapp"
+        self.username_input_selector = "[name=UserName]"
+        self.password_input_selector = "[type=password]"
+        self.login_button_selector = "#login"
+        self.logout_button_selector = "#login"
+        self.loginstatus_selector = "#loginstatus"
 
     def login(self, username, password):
-        self.page.fill("#username", username)
-        self.page.fill("#password", password)
+        self.page.find(self.username_input_selector).input(username)
+        self.page.find(self.password_input_selector).input(password)
         self.page.click("#login")
+
+    def get_loginstatus(self) -> str:
+        return self.page.find(self.loginstatus_selector).get_text()
+
+    def logout(self):
+        return self.page.find(self.logout_button_selector).click()
