@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pages.base_page import BasePage, BaseElement
+from pages.base_page import BasePage, BaseElement, BaseSwitchTo
 import time
 from typing import Literal, Self, Any
 from selenium.webdriver.remote.webelement import WebElement
@@ -292,5 +292,10 @@ class SeleniumPage(BasePage):
     def get_clipboard_content() -> str:
         return pyperclip.paste()
 
-    def switch_to_frame(self, element: WebElement):
-        self.driver.switch_to.frame(element)
+    def switch_to_frame(self, webelement: WebElement) -> Self:
+        self.driver.switch_to.frame(webelement)
+        return self
+
+    def switch_to_window(self, name: str) -> Self:
+        self.driver.switch_to.window(name)
+        return self

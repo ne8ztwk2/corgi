@@ -203,3 +203,9 @@ class BasePage(ABC):
     @staticmethod
     @abstractmethod
     def get_clipboard_content() -> str: ...
+
+    @abstractmethod
+    def switch_to_frame(self, element: BaseElement) -> Self: ...
+
+    @abstractmethod
+    def switch_to_window(self, name: str) -> Self: ...
