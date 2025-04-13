@@ -283,8 +283,14 @@ class SeleniumPage(BasePage):
         return [SeleniumElement(self.driver.find_element(By.CSS_SELECTOR, selector))]
 
     def actions(self, selector: str) -> SeleniumElement:
-        return SeleniumElement(self.driver.find_element(By.CSS_SELECTOR, selector))
+        return SeleniumElement(
+            self.driver.find_element(By.CSS_SELECTOR, selector),
+            ActionChains(self.driver),
+        )
 
     @staticmethod
     def get_clipboard_content() -> str:
         return pyperclip.paste()
+
+    def switch_to_frame(self, element: WebElement):
+        self.driver.switch_to.frame(element)
