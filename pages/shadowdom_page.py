@@ -6,15 +6,24 @@ class ShadowdomPage:
         self.page = page
         self.url = "https://www.uitestingplayground.com/shadowdom"
 
-        self.generator_selector = ".container > guid-generator"
+        self.shadow_host_selector = ".container > guid-generator"
 
         self.edit_field_selector = "#editField"
         self.button_copy_selector = "#buttonCopy"
         self.script = "return arguments[0].shadowRoot"
+        self.button_generate_selector = "#buttonGenerate"
 
     def generate(self):
-        shadow_host = self.page.find(self.generator_selector)
-        self.page.execute_script(self.script)
+        shadow_host = self.page.find(self.shadow_host_selector)
+        self.page.execute_script(self.script, shadow_host)
+        self.page.find(self.button_generate_selector).click()
+
+    def copy(self):
+        self.page.find(self.button_copy_selector).click()
+
+    def get_clipboard_content(self) -> str:
+        return self.page.get_clipboard_content()
+
         """
         shadowHost = document.querySelector('.container > guid-generator');
         shadowRoot = shadowHost.shadowRoot;
