@@ -263,8 +263,8 @@ class SeleniumPage(BasePage):
     def get_alert_text(self) -> str:
         return Alert(self.driver).text
 
-    def execute_script(self, script: str):
-        self.driver.execute_script(script)
+    def execute_script(self, script: Any, *args: Any) -> Any:
+        return self.driver.execute_script(script, *args)
 
     def alert(self, action: Literal["accept", "dismiss"], text: str = None):
         if text is not None:
