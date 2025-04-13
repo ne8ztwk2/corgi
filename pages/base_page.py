@@ -200,11 +200,6 @@ class BasePage(ABC):
     @abstractmethod
     def actions(self, selector: str) -> BaseElement: ...
 
-
-# class BaseActions(ABC):
-
-#     @abstractmethod
-#     def move_to(element: BaseElement) -> BaseElement: ...
-
-#     def drag_to(self,source: WebElement, target: WebElement) -> ActionChains):
-#         return
+    @staticmethod
+    @abstractmethod
+    def get_clipboard_content() -> str: ...

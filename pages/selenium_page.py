@@ -10,6 +10,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import Select
 
 from selenium.webdriver.common.action_chains import ActionChains
+import pyperclip
 
 # class SeleniumPage(BasePage):
 
@@ -283,3 +284,7 @@ class SeleniumPage(BasePage):
 
     def actions(self, selector: str) -> SeleniumElement:
         return SeleniumElement(self.driver.find_element(By.CSS_SELECTOR, selector))
+
+    @staticmethod
+    def get_clipboard_content() -> str:
+        return pyperclip.paste()
