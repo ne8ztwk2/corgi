@@ -1,6 +1,7 @@
 import time
 from playwright.sync_api import Page
 from pages.base_page import BasePage
+from typing import Self
 
 
 class PlaywrightPage(BasePage):
@@ -35,6 +36,10 @@ class PlaywrightPage(BasePage):
 
     def get_attribute(self, selector: str, attribute: str) -> str:
         return self.page.locator(selector=selector).get_attribute(attribute)
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class AjaxdataPage:
@@ -14,5 +15,6 @@ class AjaxdataPage:
     def wait_for_ajax_response(self):
         self.page.find(self.ajax_response_selector).wait_visible()
 
-    def goto(self):
+    def go(self) -> Self:
         self.page.goto(self.url)
+        return self

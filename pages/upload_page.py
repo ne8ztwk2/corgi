@@ -1,5 +1,5 @@
 from pages.base_page import BasePage
-
+from typing import Self
 
 class UploadPage:
     def __init__(self, page: BasePage):
@@ -19,3 +19,7 @@ class UploadPage:
         ).click()
         #  File upload cannot be performed inside the Docker container.
         ...
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class LoaddelayPage:
@@ -9,3 +10,7 @@ class LoaddelayPage:
 
     def click_delayed_button(self):
         self.page.find(self.button_selector).wait_clickable().click()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

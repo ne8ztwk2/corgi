@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 
+from typing import Self
+
 
 class MouseoverPage:
     def __init__(self, page: BasePage):
@@ -25,3 +27,7 @@ class MouseoverPage:
 
     def get_click_button_count(self) -> str:
         return self.page.find(self.click_button_count_selctor).get_text()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

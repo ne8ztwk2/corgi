@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class AutowaitPage:
@@ -45,3 +46,7 @@ class AutowaitPage:
 
     def choose_target_item(self, value: str):
         self.page.find(self.target_selector, value).select_by_value(value)
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

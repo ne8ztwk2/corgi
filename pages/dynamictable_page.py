@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class DynamictablePage:
@@ -33,3 +34,7 @@ class DynamictablePage:
 
     def get_warning_text(self) -> str:
         return self.page.find(self.warning_text_selector).get_text()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

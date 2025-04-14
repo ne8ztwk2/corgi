@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 
+from typing import Self
+
 
 class OverlappedPage:
     def __init__(self, page: BasePage):
@@ -27,3 +29,7 @@ class OverlappedPage:
             f"arguments[{self.page.find(self.subject_input_selector)}].scrollIntoView(true);"
         )
         self.page.find(self.subject_input_selector).input(text)
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

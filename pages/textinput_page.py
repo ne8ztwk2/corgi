@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class TextinputPage:
@@ -16,3 +17,7 @@ class TextinputPage:
 
     def get_butten_text(self) -> str:
         return self.page.find(self.button_selector).get_attribute("value")
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

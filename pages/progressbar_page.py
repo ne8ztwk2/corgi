@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 
+from typing import Self
+
 
 class ProgressbarPage:
     def __init__(self, page: BasePage):
@@ -20,3 +22,7 @@ class ProgressbarPage:
         return self.page.find(self.progress_bar_selector).get_attribute(
             self.result_attribute
         )
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class ShadowdomPage:
@@ -32,3 +33,7 @@ class ShadowdomPage:
         guid = shadowRoot.querySelector('#editField');
         console.log(guid.textContent);
         """
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

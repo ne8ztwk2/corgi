@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class AnimatedbuttonPage:
@@ -22,3 +23,7 @@ class AnimatedbuttonPage:
         self.page.click(self.animation_button_selector)
         self.page.click(self.moving_target_selector)
         return self.page.get_text(self.opstatus_selector)
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

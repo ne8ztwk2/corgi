@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class VerifytextPage:
@@ -10,3 +11,7 @@ class VerifytextPage:
 
     def verify_text(self) -> str:
         return self.page.find_all(self.text_selectors)[-1].get_text()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

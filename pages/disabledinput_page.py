@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 
+from typing import Self
+
 
 class DisabledinputPage:
     def __init__(self, page: BasePage):
@@ -16,3 +18,7 @@ class DisabledinputPage:
 
     def input_text(self, text: str):
         self.page.input(self.input_selector, text)
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

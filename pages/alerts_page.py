@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class AlertsPage:
@@ -11,3 +12,7 @@ class AlertsPage:
 
     def trigger_alert(self):
         self.page.click(self.alert_button_selector)
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

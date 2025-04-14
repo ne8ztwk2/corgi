@@ -1,9 +1,10 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class ClientdelayPage:
     def __init__(self, page: BasePage):
-        self.url="https://www.uitestingplayground.com/clientdelay"
+        self.url = "https://www.uitestingplayground.com/clientdelay"
         self.page = page
         self.ajax_button_selector = "#ajaxButton"
         self.response_selector = ".bg-success"
@@ -16,3 +17,7 @@ class ClientdelayPage:
         self.page.wait_visible(
             self.response_selector, time or self.wait_response_need_time
         )
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

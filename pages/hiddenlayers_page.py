@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class HiddenlayersPage:
@@ -9,3 +10,7 @@ class HiddenlayersPage:
 
     def click_hidden_button(self):
         self.page.find(self.click_hidden_button).click()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

@@ -22,6 +22,7 @@ from upload_page import UploadPage
 from pages.animatedbutton_page import AnimationPage
 from disabledinput_page import DisabledinputPage
 from autowait_page import AutowaitPage
+from typing import Self
 
 
 class IndexPage:
@@ -121,6 +122,10 @@ class IndexPage:
     def link_autowait(self):
         self.page.click('a[href="/autowait"]')
         return AutowaitPage(self.page)
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self
 
 
 if __name__ == "__main__":

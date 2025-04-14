@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 
+from typing import Self
+
 
 class SampleappPage:
     def __init__(self, page: BasePage):
@@ -21,3 +23,7 @@ class SampleappPage:
 
     def logout(self):
         return self.page.find(self.logout_button_selector).click()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

@@ -4,7 +4,7 @@ from pages.ajaxdata_page import AjaxdataPage
 class TestAjaxPage(AjaxdataPage):
 
     def setup_class(self):
-        self .goto("https://www.uitestingplayground.com/ajax")
+        self.goto("https://www.uitestingplayground.com/ajax")
 
     def test_ajax_response(self):
         self.click_trigger_button()

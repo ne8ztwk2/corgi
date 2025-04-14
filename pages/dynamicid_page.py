@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class DynamicidPage:
@@ -18,3 +19,7 @@ class DynamicidPage:
     @property
     def get_title(self) -> str:
         return self.page.get_title()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self

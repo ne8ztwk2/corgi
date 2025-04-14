@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+from typing import Self
 
 
 class VisibilityPage:
@@ -10,3 +11,7 @@ class VisibilityPage:
     def check_element_visibility(self, selector): ...
     def click_hide_button(self):
         self.page.find(self.hide_button_selector).click()
+
+    def go(self) -> Self:
+        self.page.goto(self.url)
+        return self
