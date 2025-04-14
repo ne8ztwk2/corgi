@@ -21,3 +21,7 @@ class TextinputPage:
     def go(self) -> Self:
         self.page.goto(self.url)
         return self
+
+    @property
+    def get_title(self) -> str:
+        return self.page.get_title()

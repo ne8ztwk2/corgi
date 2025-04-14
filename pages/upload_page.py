@@ -1,6 +1,7 @@
 from pages.base_page import BasePage
 from typing import Self
 
+
 class UploadPage:
     def __init__(self, page: BasePage):
         self.url = "https://www.uitestingplayground.com/upload"
@@ -23,3 +24,7 @@ class UploadPage:
     def go(self) -> Self:
         self.page.goto(self.url)
         return self
+
+    @property
+    def get_title(self) -> str:
+        return self.page.get_title()

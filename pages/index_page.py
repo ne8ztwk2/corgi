@@ -3,7 +3,7 @@ from dynamicid_page import DynamicidPage
 from classattr_page import ClassattrPage
 from hiddenlayers_page import HiddenlayersPage
 from loaddelay_page import LoaddelayPage
-from pages.ajaxdata_page import AjaxPage
+from pages.ajaxdata_page import AjaxdataPage
 from clientsidedelay_page import ClientdelayPage
 from click_page import ClickPage
 from textinput_page import TextinputPage
@@ -19,127 +19,133 @@ from overlapped_page import OverlappedPage
 from shadowdom_page import ShadowdomPage
 from alerts_page import AlertsPage
 from upload_page import UploadPage
-from pages.animatedbutton_page import AnimationPage
+from pages.animatedbutton_page import AnimatedbuttonPage
 from disabledinput_page import DisabledinputPage
 from autowait_page import AutowaitPage
 from typing import Self
 
 
 class IndexPage:
-
     def __init__(self, page: BasePage):
         self.page = page
-        self.index_url = "https://www.uitestingplayground.com/"
+        self.url = "https://www.uitestingplayground.com/"
+
+        self.dynamicid_locator = 'a[href="/dynamicid"]'
+        self.classattr_locator = 'a[href="/classattr"]'
+        self.hiddenlayers_locator = 'a[href="/hiddenlayers"]'
+        self.loaddelay_locator = 'a[href="/loaddelay"]'
+        self.ajax_locator = 'a[href="/ajax"]'
+        self.clientdelay_locator = 'a[href="/clientdelay"]'
+        self.click_locator = 'a[href="/click"]'
+        self.textinput_locator = 'a[href="/textinput"]'
+        self.scrollbars_locator = 'a[href="/scrollbars"]'
+        self.dynamictable_locator = 'a[href="/dynamictable"]'
+        self.verifytext_locator = 'a[href="/verifytext"]'
+        self.progressbar_locator = 'a[href="/progressbar"]'
+        self.visibility_locator = 'a[href="/visibility"]'
+        self.sampleapp_locator = 'a[href="/sampleapp"]'
+        self.mouseover_locator = 'a[href="/mouseover"]'
+        self.nbsp_locator = 'a[href="/nbsp"]'
+        self.overlapped_locator = 'a[href="/overlapped"]'
+        self.shadowdom_locator = 'a[href="/shadowdom"]'
+        self.alerts_locator = 'a[href="/alerts"]'
+        self.upload_locator = 'a[href="/upload"]'
+        self.animation_locator = 'a[href="/animation"]'
+        self.disabledinput_locator = 'a[href="/disabledinput"]'
+        self.autowait_locator = 'a[href="/autowait"]'
 
     def link_dynamicid(self):
-        self.page.click('a[href="/dynamicid"]')
+        self.page.find(self.dynamicid_locator).click()
         return DynamicidPage(self.page)
 
     def link_classattr(self):
-        self.page.click('a[href="/classattr"]')
+        self.page.find(self.classattr_locator).click()
         return ClassattrPage(self.page)
 
     def link_hiddenlayers(self):
-        self.page.click('a[href="/hiddenlayers"]')
+        self.page.find(self.hiddenlayers_locator).click()
         return HiddenlayersPage(self.page)
 
     def link_loaddelay(self):
-        self.page.click('a[href="/loaddelay"]')
+        self.page.find(self.loaddelay_locator).click()
         return LoaddelayPage(self.page)
 
     def link_ajax(self):
-        self.page.click('a[href="/ajax"]')
-        return AjaxPage(self.page)
+        self.page.find(self.ajax_locator).click()
+        return AjaxdataPage(self.page)
 
     def link_clientdelay(self):
-        self.page.click('a[href="/clientdelay"]')
+        self.page.find(self.clientdelay_locator).click()
         return ClientdelayPage(self.page)
 
     def link_click(self):
-        self.page.click('a[href="/click"]')
+        self.page.find(self.click_locator).click()
         return ClickPage(self.page)
 
     def link_textinput(self):
-        self.page.click('a[href="/textinput"]')
+        self.page.find(self.textinput_locator).click()
         return TextinputPage(self.page)
 
     def link_scrollbars(self):
-        self.page.click('a[href="/scrollbars"]')
+        self.page.find(self.scrollbars_locator).click()
         return ScrollbarsPage(self.page)
 
     def link_dynamictable(self):
-        self.page.click('a[href="/dynamictable"]')
+        self.page.find(self.dynamictable_locator).click()
         return DynamictablePage(self.page)
 
     def link_verifytext(self):
-        self.page.click('a[href="/verifytext"]')
+        self.page.find(self.verifytext_locator).click()
         return VerifytextPage(self.page)
 
     def link_progressbar(self):
-        self.page.click('a[href="/progressbar"]')
+        self.page.find(self.progressbar_locator).click()
         return ProgressbarPage(self.page)
 
     def link_visibility(self):
-        self.page.click('a[href="/visibility"]')
+        self.page.find(self.visibility_locator).click()
         return VisibilityPage(self.page)
 
     def link_sampleapp(self):
-        self.page.click('a[href="/sampleapp"]')
+        self.page.find(self.sampleapp_locator).click()
         return SampleappPage(self.page)
 
     def link_mouseover(self):
-        self.page.click('a[href="/mouseover"]')
+        self.page.find(self.mouseover_locator).click()
         return MouseoverPage(self.page)
 
     def link_nbsp(self):
-        self.page.click('a[href="/nbsp"]')
+        self.page.find(self.nbsp_locator).click()
         return NbspPage(self.page)
 
     def link_overlapped(self):
-        self.page.click('a[href="/overlapped"]')
+        self.page.find(self.overlapped_locator).click()
         return OverlappedPage(self.page)
 
     def link_shadowdom(self):
-        self.page.click('a[href="/shadowdom"]')
+        self.page.find(self.shadowdom_locator).click()
         return ShadowdomPage(self.page)
 
     def link_alerts(self):
-        self.page.click('a[href="/alerts"]')
+        self.page.find(self.alerts_locator).click()
         return AlertsPage(self.page)
 
     def link_upload(self):
-        self.page.click('a[href="/upload"]')
+        self.page.find(self.upload_locator).click()
         return UploadPage(self.page)
 
     def link_animation(self):
-        self.page.click('a[href="/animation"]')
-        return AnimationPage(self.page)
+        self.page.find(self.animation_locator).click()
+        return AnimatedbuttonPage(self.page)
 
     def link_disabledinput(self):
-        self.page.click('a[href="/disabledinput"]')
+        self.page.find(self.disabledinput_locator).click()
         return DisabledinputPage(self.page)
 
     def link_autowait(self):
-        self.page.click('a[href="/autowait"]')
+        self.page.find(self.autowait_locator).click()
         return AutowaitPage(self.page)
 
     def go(self) -> Self:
         self.page.goto(self.url)
         return self
-
-
-if __name__ == "__main__":
-    from selenium import webdriver
-    import pages.selenium_page as selenium_page
-
-    driver = webdriver.Firefox()
-
-    sp = selenium_page.SeleniumPage(driver)
-    sp.goto("https://www.uitestingplayground.com/")
-    p = IndexPage(sp)
-    lkt = p.link_dynamicid()
-
-    print(lkt.get_title)
-    print(lkt.get_button_id)
-
-    driver.quit()
