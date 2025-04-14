@@ -13,3 +13,6 @@ class AjaxdataPage:
 
     def wait_for_ajax_response(self):
         self.page.find(self.ajax_response_selector).wait_visible()
+
+    def goto(self):
+        self.page.goto(self.url)
