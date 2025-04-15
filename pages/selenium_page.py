@@ -15,7 +15,7 @@ import pyperclip
 
 class SeleniumElement(BaseElement):
 
-    def __init__(self, element: WebElement, actions: ActionChains):
+    def __init__(self, element: WebElement, actions: ActionChains = None):
         self.element = element
         self.timeout = 8
         self.actions = actions
@@ -33,7 +33,7 @@ class SeleniumElement(BaseElement):
         return self.element.get_attribute("textContent")
 
     def get_attribute(self, attribute: str) -> str | None:
-        self.element.get_attribute(attribute)
+        return self.element.get_attribute(attribute)
 
     def is_visible(self) -> bool:
         return self.element.is_displayed()
@@ -50,7 +50,7 @@ class SeleniumElement(BaseElement):
 
     def wait_editable(self, timeout: float = None) -> Self:
         return WebDriverWait(self.driver, timeout or self.timeout).until(
-            self.self.element.is_displayed()
+            self.element.is_displayed()
             and self.element.is_enabled()
             and self.element.get_attribute("readonly") is None
         )
@@ -60,7 +60,7 @@ class SeleniumElement(BaseElement):
             EC.element_to_be_clickable(self.element)
         )
 
-    def wait_non_zreo_size(self, timeout: float = None) -> Self:
+    def wait_non_zero_size(self, timeout: float = None) -> Self:
         return WebDriverWait(self.driver, timeout or self.timeout).until(
             self.element_size["width"] > 0 and self.element_size["height"] > 0
         )
@@ -141,7 +141,10 @@ class SeleniumPage(BasePage):
         return SeleniumElement(self.driver.find_element(By.CSS_SELECTOR, selector))
 
     def find_all(self, selector: str) -> list[SeleniumElement]:
-        return [SeleniumElement(self.driver.find_element(By.CSS_SELECTOR, selector))]
+        return [
+            SeleniumElement(element)
+            for element in self.driver.find_elements(By.CSS_SELECTOR, selector)
+        ]
 
     def actions(self, selector: str) -> SeleniumElement:
         return SeleniumElement(

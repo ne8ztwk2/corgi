@@ -5,101 +5,46 @@ import pytest
 @pytest.mark.usefixtures("basepage")
 class TestIndexPage:
 
-    def setup_class(self, basepage):
+    @pytest.fixture(scope="class", autouse=True)
+    def setup(self, basepage):
         self.page = IndexPage(basepage)
-        self.page.goto(self.index_url)
+        self.page.go()
+        self.base_url = "https://www.uitestingplayground.com"
 
-    def teardown_class(self):
-        self.page.quit()
+    @pytest.mark.parametrize(
+        "selector",
+        "expected_title",
+        "expected_url",
+        [
+            ('a[href="/dynamicid"]', "Dynamic ID", "/dynamicid"),
+            ('a[href="/classattr"]', "Class Attribute", "/classattr"),
+            ('a[href="/hiddenlayers"]', "Hidden Layers", "/hiddenlayers"),
+            ('a[href="/loaddelay"]', "Load Delays", "/loaddelay"),
+            ('a[href="/ajax"]', "AJAX Data", "/ajax"),
+            ('a[href="/clientdelay"]', "Client Side Delay", "/clientdelay"),
+            ('a[href="/click"]', "Click", "/click"),
+            ('a[href="/textinput"]', "Text Input", "/textinput"),
+            ('a[href="/scrollbars"]', "Scrollbars", "/scrollbars"),
+            ('a[href="/dynamictable"]', "Dynamic Table", "/dynamictable"),
+            ('a[href="/verifytext"]', "Verify Text", "/verifytext"),
+            ('a[href="/progressbar"]', "Progress Bar", "/progressbar"),
+            ('a[href="/visibility"]', "Visibility", "/visibility"),
+            ('a[href="/sampleapp"]', "Sample App", "/sampleapp"),
+            ('a[href="/mouseover"]', "Mouse Over", "/mouseover"),
+            ('a[href="/nbsp"]', "Non-Breaking Space", "/nbsp"),
+            ('a[href="/overlapped"]', "Overlapped Element", "/overlapped"),
+            ('a[href="/shadowdom"]', "Shadow DOM", "/shadowdom"),
+            ('a[href="/alerts"]', "Alerts", "/alerts"),
+            ('a[href="/upload"]', "File Upload", "/upload"),
+            ('a[href="/animation"]', "Animation", "/animation"),
+            ('a[href="/disabledinput"]', "Disabled Input", "/disabledinput"),
+            ('a[href="/autowait"]', "Auto Wait", "/autowait"),
+        ],
+    )
+    def test_link(self, selector, expected_title, expected_url):
+        self.page.link_to(selector)
+        title = self.page.get_title()
+        url = self.page.get_url()
 
-    def test_link_to_dymicicd(self):
-        title = self.link_dynamicid().get_title
-        assert title == "Dynamic ID"
-
-    def test_link_to_classattr(self):
-        title = self.link_classattr().get_title
-        assert title == "Class Attribute"
-
-    def test_link_to_hiddenlayers(self):
-        title = self.link_hiddenlayers().get_title
-        assert title == "Hidden Layers"
-
-    def test_link_to_loaddelay(self):
-        title = self.link_loaddelay().get_title
-        assert title == "Load Delay"
-
-    def test_link_to_ajax(self):
-        title = self.link_ajax().get_title
-        assert title == "AJAX Data"
-
-    def test_link_to_clientdelay(self):
-        title = self.link_clientdelay().get_title
-        assert title == "Client Delay"
-
-    def test_link_to_click(self):
-        title = self.link_click().get_title
-        assert title == "Click"
-
-    def test_link_to_textinput(self):
-        title = self.link_textinput().get_title
-        assert title == "Text Input"
-
-    def test_link_to_scrollbars(self):
-        title = self.link_scrollbars().get_title
-        assert title == "Scrollbars"
-
-    def test_link_to_dynamictable(self):
-        title = self.link_dynamictable().get_title
-        assert title == "Dynamic Table"
-
-    def test_link_to_verifytext(self):
-        title = self.link_verifytext().get_title
-        assert title == "Verify Text"
-
-    def test_link_to_progressbar(self):
-        title = self.link_progressbar().get_title
-        assert title == "Progress Bar"
-
-    def test_link_to_visibility(self):
-        title = self.link_visibility().get_title
-        assert title == "Visibility"
-
-    def test_link_to_sampleapp(self):
-        title = self.link_sampleapp().get_title
-        assert title == "Sample App"
-
-    def test_link_to_mouseover(self):
-        title = self.link_mouseover().get_title
-        assert title == "Mouse Over"
-
-    def test_link_to_nbsp(self):
-        title = self.link_nbsp().get_title
-        assert title == "NBSP"
-
-    def test_link_to_overlapped(self):
-        title = self.link_overlapped().get_title
-        assert title == "Overlapped"
-
-    def test_link_to_shadowdom(self):
-        title = self.link_shadowdom().get_title
-        assert title == "Shadow DOM"
-
-    def test_link_to_alerts(self):
-        title = self.link_alerts().get_title
-        assert title == "Alerts"
-
-    def test_link_to_upload(self):
-        title = self.link_upload().get_title
-        assert title == "File Upload"
-
-    def test_link_to_animation(self):
-        title = self.link_animation().get_title
-        assert title == "Animation"
-
-    def test_link_to_disabledinput(self):
-        title = self.link_disabledinput().get_title
-        assert title == "Disabled Input"
-
-    def test_link_to_autowait(self):
-        title = self.link_autowait().get_title
-        assert title == "Auto Wait"
+        assert title == expected_title
+        assert url == f"{self.base_url}{expected_url}"

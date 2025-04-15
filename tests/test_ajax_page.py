@@ -9,7 +9,7 @@ class TestAjaxPage(AjaxdataPage):
     def test_ajax_response(self):
         self.click_trigger_button()
         self.wait_for_ajax_response()
-        content = self.page.text("#content")
+        content = self.page.find("#content").get_text()
         assert content is not None
 
     def teardown_class(self):

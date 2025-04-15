@@ -1,10 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from playwright.sync_api import sync_playwright, Page
+from playwright.sync_api import sync_playwright, Page, Playwright, Browser
 from pages.selenium_page import SeleniumPage
-from pages.base_page import BasePage
-from pages.playwrigh_page import PlaywrightPage
+from pages.playwright_page import PlaywrightPage
 from pytest import Parser, FixtureRequest, fixture
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -54,26 +53,34 @@ def create_selenium_driver(browser_name: str) -> WebDriver:
         raise ValueError(f"Selenium 不支持这个浏览器: {browser_name}")
 
 
-def create_playwright_driver(browser_name: str) -> Page:
+def create_playwright_driver(
+    browser_name: str, playwright_context: Playwright
+) -> Browser:
     """创建 Playwright 驱动"""
+    if browser_name == "chrome":
+        return playwright_context.chromium.launch(channel="chrome", headless=True)
+    elif browser_name == "firefox":
+        return playwright_context.firefox.launch(headless=True)
+    else:
+        raise ValueError(f"Playwright 不支持这个浏览器: {browser_name}")
+
+
+@fixture(scope="session")
+def playwright_context():
+    """创建 Playwright 上下文并在会话结束时关闭"""
     with sync_playwright() as p:
-        if browser_name == "chrome":
-            return p.chromium.launch(channel="chrome", headless=True).new_page()
-        elif browser_name == "firefox":
-            return p.firefox.launch(headless=True).new_page()
-        else:
-            raise ValueError(f"Playwright 不支持这个浏览器: {browser_name}")
+        yield p
 
 
 @fixture(scope="class")
-def basepage(driver_type, browser_name):
+def basepage(driver_type, browser_name, playwright_context):
     """初始化浏览器驱动并返回对应的页面对象"""
     if driver_type == "selenium":
         driver = create_selenium_driver(browser_name)
         page = SeleniumPage(driver)
     elif driver_type == "playwright":
-        pw_page = create_playwright_driver(browser_name)
-        page = PlaywrightPage(pw_page)
+        browser = create_playwright_driver(browser_name, playwright_context)
+        page = PlaywrightPage(browser.new_page())
     else:
         raise ValueError(f"不支持的驱动类型: {driver_type}")
 
@@ -82,4 +89,4 @@ def basepage(driver_type, browser_name):
     if driver_type == "selenium":
         driver.quit()
     else:
-        pw_page.close()
+        browser.close()
