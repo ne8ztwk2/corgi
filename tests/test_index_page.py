@@ -1,10 +1,12 @@
 from pages.index_page import IndexPage
+import pytest
 
 
-class TestIndexPage(IndexPage):
+@pytest.mark.usefixtures("basepage")
+class TestIndexPage:
 
-    def setup_class(self):
-
+    def setup_class(self, basepage):
+        self.page = IndexPage(basepage)
         self.page.goto(self.index_url)
 
     def teardown_class(self):

@@ -13,8 +13,7 @@ class DynamicidPage:
 
     @property
     def get_button_id(self) -> str:
-        print(self.page.get_text(self.button_selector))
-        return self.page.get_attribute(self.button_selector, "id")
+        return self.page.find(self.button_selector).get_attribute("id")
 
     @property
     def get_title(self) -> str:

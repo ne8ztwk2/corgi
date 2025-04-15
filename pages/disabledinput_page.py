@@ -11,13 +11,13 @@ class DisabledinputPage:
         self.min_need_time = 5.5
 
     def check_input_disabled(self):
-        return self.page.get_attribute(self.input_selector, "disabled")
+        return self.page.find(self.input_selector).get_attribute("disabled")
 
     def delay_input(self, time: float = None):
-        self.page.wait_editable(self.input_selector, time or self.min_need_time)
+        self.page.find(self.input_selector).wait_editable(time or self.min_need_time)
 
     def input_text(self, text: str):
-        self.page.input(self.input_selector, text)
+        self.page.find(self.input_selector).input(text)
 
     def go(self) -> Self:
         self.page.goto(self.url)

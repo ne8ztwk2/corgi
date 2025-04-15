@@ -20,9 +20,9 @@ class AnimatedbuttonPage:
         函数返回opstatus的文本
         """
         self.page.execute_script()
-        self.page.click(self.animation_button_selector)
-        self.page.click(self.moving_target_selector)
-        return self.page.get_text(self.opstatus_selector)
+        self.page.find(self.animation_button_selector).click()
+        self.page.find(self.moving_target_selector).click()
+        return self.page.find(self.opstatus_selector).get_text()
 
     def go(self) -> Self:
         self.page.goto(self.url)

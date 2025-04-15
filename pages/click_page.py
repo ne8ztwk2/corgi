@@ -10,8 +10,8 @@ class ClickPage:
         self.button_success_selector = ".btn.btn-success"
 
     def click_button(self):
-        self.page.click(self.button_selector)
-        self.page.wait_visible(self.button_success_selector)
+        self.page.find(self.button_selector).click()
+        self.page.find(self.button_success_selector).wait_visible()
 
     def go(self) -> Self:
         self.page.goto(self.url)

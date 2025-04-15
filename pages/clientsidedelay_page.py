@@ -11,11 +11,11 @@ class ClientdelayPage:
         self.wait_response_need_time = 15.5
 
     def click_ajax_button(self):
-        self.page.click(self.ajax_button_selector)
+        self.page.find(self.ajax_button_selector).click()
 
     def wait_response(self, time: float = None):
-        self.page.wait_visible(
-            self.response_selector, time or self.wait_response_need_time
+        self.page.find(self.response_selector).wait_visible(
+            time or self.wait_response_need_time
         )
 
     def go(self) -> Self:

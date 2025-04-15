@@ -10,7 +10,7 @@ class ClassattrPage:
         self.alert_text = "Primary button pressed"
 
     def click_blue_button_and_get_text(self) -> str:
-        self.page.click(self.blue_button_selector)
+        self.page.find(self.blue_button_selector).click()
         return self.page.get_alert_text()
 
     def go(self) -> Self:
