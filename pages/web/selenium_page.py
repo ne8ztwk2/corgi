@@ -23,7 +23,7 @@ class SeleniumElement(BaseElement):
 
     def __init__(self, element: WebElement, actions: ActionChains = None):
         self.element = element
-        self.timeout = 8
+
         self.actions = actions
 
     def click(self):
@@ -43,33 +43,6 @@ class SeleniumElement(BaseElement):
 
     def is_visible(self) -> bool:
         return self.element.is_displayed()
-
-    def wait_visible(self, timeout: float = None) -> Self:
-        return WebDriverWait(self.driver, timeout or self.timeout).until(
-            EC.visibility_of(self.element)
-        )
-
-    def wait_enable(self, timeout: float = None) -> Self:
-        return WebDriverWait(self.driver, timeout or self.timeout).until(
-            self.element.is_enabled()
-        )
-
-    def wait_editable(self, timeout: float = None) -> Self:
-        return WebDriverWait(self.driver, timeout or self.timeout).until(
-            self.element.is_displayed()
-            and self.element.is_enabled()
-            and self.element.get_attribute("readonly") is None
-        )
-
-    def wait_clickable(self, timeout: float = None) -> Self:
-        return WebDriverWait(self.driver, timeout or self.timeout).until(
-            EC.element_to_be_clickable(self.element)
-        )
-
-    def wait_non_zero_size(self, timeout: float = None) -> Self:
-        return WebDriverWait(self.driver, timeout or self.timeout).until(
-            self.element_size["width"] > 0 and self.element_size["height"] > 0
-        )
 
     def select_by_value(self, value: str):
         Select(self.element).select_by_value(value)
@@ -124,6 +97,7 @@ class SeleniumPage(BasePage):
     def __init__(self, page: WebDriver):
         self.page = page
         self.strftime = "%Y-%m-%d %H:%M:%S"
+        self.timeout = 8
 
     def goto(self, url: str):
         self.page.get(url)
@@ -157,11 +131,63 @@ class SeleniumPage(BasePage):
             for element in self.page.find_elements(By.CSS_SELECTOR, selector)
         ]
 
+    # actions
+
     def actions(self, selector: str) -> SeleniumElement:
         return SeleniumElement(
             self.page.find_element(By.CSS_SELECTOR, selector),
             ActionChains(self.page),
         )
+
+    # wait
+
+    def wait_visible(self, selector: str, timeout: float = None) -> SeleniumElement:
+        WebDriverWait(self.page, timeout or self.timeout).until(
+            EC.visibility_of(self.page.find_element(By.CSS_SELECTOR, selector))
+        )
+        return self.find(selector)
+
+    def wait_enable(self, selector: str, timeout: float = None) -> SeleniumElement:
+        WebDriverWait(self.page, timeout or self.timeout).until(
+            self.page.find_element(By.CSS_SELECTOR, selector).is_enabled()
+        )
+
+    def wait_editable(self, selector: str, timeout: float = None) -> SeleniumElement:
+        WebDriverWait(self.page, timeout or self.timeout).until(
+            self.page.find_element(By.CSS_SELECTOR, selector).is_displayed()
+            and self.page.find_element(By.CSS_SELECTOR, selector).is_enabled()
+            and self.page.find_element(By.CSS_SELECTOR, selector).get_attribute(
+                "readonly"
+            )
+            is None
+        )
+        return self.find(selector)
+
+    def wait_clickable(self, selector: str, timeout: float = None) -> SeleniumElement:
+        WebDriverWait(self.page, timeout or self.timeout).until(
+            EC.element_to_be_clickable(
+                self.page.find_element(By.CSS_SELECTOR, selector)
+            )
+        )
+        return self.find(selector)
+
+    def wait_non_zero_size(
+        self, selector: str, timeout: float = None
+    ) -> SeleniumElement:
+        element_size = self.page.find_element(By.CSS_SELECTOR, selector).size
+        WebDriverWait(self.page, timeout or self.timeout).until(
+            element_size["width"] > 0 and element_size["height"] > 0
+        )
+        return self.find(selector)
+
+    def wait_not_has_class(
+        self, selector: str, class_name: str, timeout: float = None
+    ) -> SeleniumElement:
+        WebDriverWait(self.page, timeout or self.timeout).until(
+            lambda d: class_name
+            not in d.find_element(By.CSS_SELECTOR, selector).get_attribute("class")
+        )
+        return self.find(selector)
 
     @staticmethod
     def get_clipboard_content() -> str:

@@ -1,18 +1,17 @@
-from pages.animatedbutton_page import AnimatedbuttonPage
+from pages.web.animatedbutton_page import AnimatedbuttonPage
 
 import pytest
 
 
-@pytest.mark.usefixtures("basepage")
 class TestAnimationPage:
 
+    @pytest.fixture(autouse=True)
     def setup(self, basepage):
         self.page = AnimatedbuttonPage(basepage)
-        self.page.goto("https://www.uitestingplayground.com/animation")
+        self.page.open()
+        yield
+        self.page.close()
 
-    def test_wait_for_animation(self):
-        self.wait_for_animation()
-        assert self.page.is_visible("#animatedElement")
-
-    def teardown_class(self):
-        self.page.quit()
+    def test_click_moving_target(self):
+        text = self.page.click_animation_button_and_moving_target()
+        assert text == "Moving Target clicked. It's class name is 'btn btn-primary'"

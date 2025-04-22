@@ -13,7 +13,7 @@ class AjaxdataPage:
         self.basepage.find(self.ajax_button_selector).click()
 
     def wait_for_ajax_response(self):
-        self.basepage.find(self.ajax_response_selector).wait_visible(max_wait_time=16)
+        self.basepage.wait_visible(self.ajax_response_selector, 16)
 
     def open(self) -> Self:
         self.basepage.goto(self.url)

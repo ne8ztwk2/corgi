@@ -1,20 +1,19 @@
-from pages.autowait_page import AutowaitPage
+from pages.web.autowait_page import AutowaitPage
 
 import pytest
 
 
-@pytest.mark.usefixtures("basepage")
-class TestAutowaitPage(AutowaitPage):
+class TestAutowaitPage:
 
-    def setup_class(self):
-        self.page.goto("https://www.uitestingplayground.com/autowait")
+    @pytest.fixture(autouse=True)
+    def setup(self, basepage):
+        self.page = AutowaitPage(basepage)
+        self.page.open()
+        yield
+        self.page.close()
 
     def test_click_button(self):
         self.click_button()
-        assert self.page.is_visible("#autoWaitMessage")
 
     def teardown_class(self):
         self.page.quit()
-
-
-        

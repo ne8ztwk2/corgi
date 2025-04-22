@@ -1,12 +1,10 @@
-from pages.classattr_page import ClassattrPage
-from selenium import webdriver
-from pages.selenium_page import SeleniumPage
+from pages.web.classattr_page import ClassattrPage
 
 import pytest
 
 
-@pytest.mark.usefixtures("basepage")
 class TestClassattrPage:
+
 
     def setup_class(self):
         driver = webdriver.Firefox()

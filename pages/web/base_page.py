@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Self, Any
-from config import UI_MAX_WAIT_TIME, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
+from config import UI_timeout, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
 
 
 class BaseAlert(ABC):
@@ -21,7 +21,7 @@ class BaseAlert(ABC):
 
 
 class BaseElement(ABC):
-    max_wait_time = UI_MAX_WAIT_TIME
+    timeout = UI_timeout
 
     @abstractmethod
     def click(self):
@@ -46,26 +46,6 @@ class BaseElement(ABC):
     @abstractmethod
     def get_attribute(self, attribute: str) -> str | None:
         """获取元素属性"""
-
-    @abstractmethod
-    def wait_visible(self, max_wait_time: float = None) -> Self:
-        """等待元素可见"""
-
-    @abstractmethod
-    def wait_enable(self, max_wait_time: float = None) -> Self:
-        """等待元素启用"""
-
-    @abstractmethod
-    def wait_editable(self, max_wait_time: float = None) -> Self:
-        """等待元素可编辑"""
-
-    @abstractmethod
-    def wait_clickable(self, max_wait_time: float = None) -> Self:
-        """等待元素可点击"""
-
-    @abstractmethod
-    def wait_non_zreo_size(self, max_wait_time: float = None) -> Self:
-        """等待元素非零尺寸"""
 
     @abstractmethod
     def select_by_value(self, value: str):
@@ -144,6 +124,32 @@ class BasePage(ABC):
     @abstractmethod
     def find_all(self, selector: str) -> list[BaseElement]:
         """查找元素列表"""
+
+    @abstractmethod
+    def wait_visible(self, selector: str, timeout: float = None) -> BaseElement:
+        """等待元素可见"""
+
+    @abstractmethod
+    def wait_enable(self, selector: str, timeout: float = None) -> BaseElement:
+        """等待元素启用"""
+
+    @abstractmethod
+    def wait_editable(self, selector: str, timeout: float = None) -> BaseElement:
+        """等待元素可编辑"""
+
+    @abstractmethod
+    def wait_clickable(self, selector: str, timeout: float = None) -> BaseElement:
+        """等待元素可点击"""
+
+    @abstractmethod
+    def wait_non_zreo_size(self, selector: str, timeout: float = None) -> BaseElement:
+        """等待元素非零尺寸"""
+
+    @abstractmethod
+    def wait_not_has_class(
+        self, selector: str, class_name: str, timeout: float = None
+    ) -> Self:
+        """等待元素不包含指定class"""
 
     @abstractmethod
     def actions(self, selector: str) -> BaseElement:
