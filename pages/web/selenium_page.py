@@ -1,27 +1,22 @@
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from pages.web.base_page import BasePage, BaseElement, BaseBrowser
 import time
-from typing import Literal, Self, Any
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.ui import Select
+from typing import Any, Literal, Self
 
-from selenium.webdriver.common.action_chains import ActionChains
 import pyperclip
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from playwright.sync_api import sync_playwright, Page, Playwright, Browser
-from pages.web.selenium_page import SeleniumPage
-from pages.web.playwright_page import PlaywrightPage
-from pages.web.base_page import BaseBrowser
-from pytest import Parser, FixtureRequest, fixture
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.remote.webdriver import WebDriver
+
+from pages.web.base_page import BasePage, BaseElement, BaseBrowser, BaseAlert
+from pages.web.selenium_page import SeleniumPage
 
 
 class SeleniumElement(BaseElement):
@@ -107,6 +102,23 @@ class SeleniumElement(BaseElement):
         self.actions.click_and_hold(self.element).perform()
 
 
+class SeleniumAlert(BaseAlert):
+    def __init__(self, alert: Alert):
+        self.alert = alert
+
+    def accept(self):
+        self.alert.accept()
+
+    def dismiss(self):
+        self.alert.dismiss()
+
+    def send_keys(self, text: str):
+        self.alert.send_keys(text)
+
+    def get_text(self) -> str:
+        return self.alert.text
+
+
 class SeleniumPage(BasePage):
 
     def __init__(self, page: WebDriver):
@@ -133,20 +145,8 @@ class SeleniumPage(BasePage):
     def quit(self):
         self.page.quit()
 
-    def get_alert_text(self) -> str:
-        return Alert(self.page).text
-
     def execute_script(self, script: Any, *args: Any) -> Any:
         return self.page.execute_script(script, *args)
-
-    def alert(self, action: Literal["accept", "dismiss"], text: str = None):
-        if text is not None:
-            Alert(self.page).send_keys(text)
-
-        if action == "accept":
-            Alert(self.page).accept()
-        else:
-            Alert(self.page).dismiss()
 
     def find(self, selector: str) -> SeleniumElement:
         return SeleniumElement(self.page.find_element(By.CSS_SELECTOR, selector))
@@ -171,9 +171,8 @@ class SeleniumPage(BasePage):
         self.page.switch_to.frame(webelement)
         return self
 
-    def switch_to_window(self, name: str) -> Self:
-        self.page.switch_to.window(name)
-        return self
+    def switch_to_alert(self) -> SeleniumAlert:
+        return Alert(self.page)
 
 
 class SeleniumBrowser(BaseBrowser):
@@ -208,3 +207,6 @@ class SeleniumBrowser(BaseBrowser):
 
     def close(self):
         self.browser.quit()
+
+    def switch_to_page(self, name: str) -> SeleniumPage:
+        self.browser.switch_to.window(name)

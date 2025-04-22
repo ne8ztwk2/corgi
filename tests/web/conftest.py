@@ -1,11 +1,11 @@
-from pages.selenium_page import SeleniumBrowser
-from pages.playwright_page import PlaywrightBrowser
+from pages.web.selenium_page import SeleniumBrowser
+from pages.web.playwright_page import PlaywrightBrowser
 from config import HEADLESS, BROWSER_NAME, DRIVER_TYPE
 import pytest
 
 
 @pytest.fixture(scope="class")
-def browser():
+def basepage():
     """初始化浏览器驱动并返回对应的页面对象"""
     if DRIVER_TYPE == "selenium":
         browser = SeleniumBrowser(browser_name=BROWSER_NAME, headless=HEADLESS)

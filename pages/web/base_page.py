@@ -1,7 +1,23 @@
 from abc import ABC, abstractmethod
-from typing import Literal, Self, Any
-from playwright.sync_api import Locator
+from typing import Self, Any
 from config import UI_MAX_WAIT_TIME, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
+
+
+class BaseAlert(ABC):
+    @abstractmethod
+    def accept(self):
+        """接受弹窗"""
+
+    @abstractmethod
+    def dismiss(self):
+        """拒绝弹窗"""
+
+    @abstractmethod
+    def send_keys(self, text: str):
+        """输入文本到弹窗"""
+
+    def get_text(self) -> str:
+        """获取弹窗文本"""
 
 
 class BaseElement(ABC):
@@ -118,14 +134,6 @@ class BasePage(ABC):
         """关闭浏览器"""
 
     @abstractmethod
-    def alert(self, action: Literal["accept", "dismiss"], text: str = None):
-        """操作alert弹窗"""
-
-    @abstractmethod
-    def get_alert_text(self) -> str:
-        """获取alert弹窗文字"""
-
-    @abstractmethod
     def execute_script(self, script: Any, *args: Any) -> Any:
         """执行js脚本"""
 
@@ -150,10 +158,14 @@ class BasePage(ABC):
     def switch_to_frame(self, element: BaseElement) -> Self:
         """切换frame"""
 
+    @abstractmethod
+    def switch_to_alert(self) -> BaseAlert:
+        """切换alert弹窗"""
+
 
 class BaseBrowser(ABC):
 
-    def launch(self) -> Self:
+    def launch(self) -> BasePage:
         """运行浏览器"""
 
     def close(self):
