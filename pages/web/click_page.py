@@ -3,20 +3,26 @@ from typing import Self
 
 
 class ClickPage:
-    def __init__(self, page: BasePage):
-        self.page = page
+    def __init__(self, basepage: BasePage):
+        self.basepage = basepage
         self.url = "https://www.uitestingplayground.com/click"
         self.button_selector = "#badButton"
         self.button_success_selector = ".btn.btn-success"
 
     def click_button(self):
-        self.page.find(self.button_selector).click()
-        self.page.find(self.button_success_selector).wait_visible()
+        self.basepage.find(self.button_selector).click()
+        self.basepage.wait_visible(self.button_success_selector)
 
-    def go(self) -> Self:
-        self.page.goto(self.url)
+    def open(self) -> Self:
+        self.basepage.goto(self.url)
         return self
+
+    def get_button_class(self) -> str:
+        return self.basepage.find(self.button_success_selector).get_attribute("class")
+
+    def close(self):
+        self.basepage.close()
 
     @property
     def get_title(self) -> str:
-        return self.page.get_title()
+        return self.basepage.get_title()

@@ -11,11 +11,14 @@ class ClassattrPage:
 
     def click_blue_button_and_get_text(self) -> str:
         self.basepage.find(self.blue_button_selector).click()
-        return self.basepage.get_alert_text()
+        return self.basepage.switch_to_alert().get_text()
 
-    def go(self) -> Self:
+    def open(self) -> Self:
         self.basepage.goto(self.url)
         return self
+
+    def close(self):
+        self.basepage.quit()
 
     @property
     def get_title(self) -> str:

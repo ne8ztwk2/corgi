@@ -1,18 +1,18 @@
-from pages.click_page import ClickPage
+from pages.web.click_page import ClickPage
 
 import pytest
 
 
-@pytest.mark.usefixtures("basepage")
-class TestClickPage(ClickPage):
+class TestClickPage:
 
-    def setup_class(self):
-        self.page.goto("https://www.uitestingplayground.com/click")
+    @pytest.fixture(autouse=True)
+    def setup(self, basepage):
+        self.page = ClickPage(basepage)
+        self.page.open()
+        yield
+        self.page.close()
 
     def test_click_button(self):
         self.click_button()
-        button_class = self.page.get_attribute("#badButton", "class")
+        button_class = self.page.get_button_class()
         assert "btn-success" in button_class
-
-    def teardown_class(self):
-        self.page.quit()

@@ -2,7 +2,7 @@ from pages.web.alerts_page import AlertsPage
 import pytest
 
 
-class TestAlertsPage(AlertsPage):
+class TestAlertsPage:
 
     @pytest.fixture(autouse=True)
     def setup(self, basepage):
@@ -35,17 +35,17 @@ class TestAlertsPage(AlertsPage):
     def test_trigger_prompt(self):
         self.page.trigger_prompt()
         self.page.accept_alert()
-        assert "User value: cats" == self.get_alert_text()
+        assert "User value: cats" == self.page.get_alert_text()
 
     @pytest.mark.parametrize("input", ["cats", "dogs"])
     def test_trigger_prompt_send_keys(self, input):
         self.page.trigger_prompt()
         self.page.send_keys_to_alert(input)
         self.page.accept_alert()
-        assert f"User value: {input}" == self.get_alert_text()
+        assert f"User value: {input}" == self.page.get_alert_text()
 
     def test_trigger_prompt_send_keys_dismiss(self):
         self.page.trigger_prompt()
         self.page.dismiss_alert()
-        assert "User value: no answer" == self.get_alert_text()
+        assert "User value: no answer" == self.page.get_alert_text()
         self.page.accept_alert()

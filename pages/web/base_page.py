@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Self, Any
-from config import UI_timeout, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
+from config import WEB_TIMEOUT, TIME_FORMAT, UI_SCREENSHOT_ABS_DIR
 
 
 class BaseAlert(ABC):
@@ -21,7 +21,7 @@ class BaseAlert(ABC):
 
 
 class BaseElement(ABC):
-    timeout = UI_timeout
+    timeout = WEB_TIMEOUT
 
     @abstractmethod
     def click(self):
@@ -108,10 +108,6 @@ class BasePage(ABC):
     @abstractmethod
     def close(self):
         """关闭当前窗口"""
-
-    @abstractmethod
-    def quit(self):
-        """关闭浏览器"""
 
     @abstractmethod
     def execute_script(self, script: Any, *args: Any) -> Any:

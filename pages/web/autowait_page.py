@@ -1,5 +1,6 @@
 from pages.web.base_page import BasePage
 from typing import Self
+from datetime import datetime
 
 
 class AutowaitPage:
@@ -16,6 +17,7 @@ class AutowaitPage:
         self.applyButton10_selector = "#applyButton10"
         self.target_selector = "#target"
         self.type_selector = "#element-type"
+        self.opstatus_selector = "#opstatus"
 
     def choose_element_type(self, type: str):
         self.basepage.find(self.type_selector).select_by_value(type)
@@ -47,6 +49,9 @@ class AutowaitPage:
     def choose_target_item(self, value: str):
         self.basepage.find(self.target_selector).select_by_value(value)
 
+    def click_target(self):
+        self.basepage.find(self.target_selector).click()
+
     def go(self) -> Self:
         self.basepage.goto(self.url)
         return self
@@ -60,3 +65,21 @@ class AutowaitPage:
     def open(self) -> Self:
         self.basepage.goto(self.url)
         return self
+
+    def wait_target_visible(self, timeout: float):
+        self.basepage.wait_visible(self.target_selector, timeout)
+
+    def wait_target_enable(self, timeout: float):
+        self.basepage.wait_enable(self.target_selector, timeout)
+
+    def wait_target_editable(self, timeout: float):
+        self.basepage.wait_editable(self.target_selector, timeout)
+
+    def wait_target_non_zreo_siz(self, timeout: float):
+        self.basepage.wait_non_zreo_size(self.target_selector, timeout)
+
+    def wait_target_visible(self, timeout: float):
+        self.basepage.wait_visible(self.target_selector, timeout)
+
+    def get_opstatus(self) -> str:
+        return self.basepage.find(self.opstatus_selector).text

@@ -12,8 +12,10 @@ class TestAutowaitPage:
         yield
         self.page.close()
 
-    def test_click_button(self):
-        self.click_button()
-
-    def teardown_class(self):
-        self.page.quit()
+    def test_wait_button_visible(self):
+        self.page.choose_element_type("button")
+        self.page.select_visible()
+        self.page.click_apply_button3()
+        self.page.wait_target_visible(4)
+        self.page.click_target()
+        assert self.page.get_opstatus() == "Target clicked."
