@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pages.base_page import BasePage, BaseElement, BaseBrowser
+from pages.web.base_page import BasePage, BaseElement, BaseBrowser
 import time
 from typing import Literal, Self, Any
 from selenium.webdriver.remote.webelement import WebElement
@@ -15,9 +15,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from playwright.sync_api import sync_playwright, Page, Playwright, Browser
-from pages.selenium_page import SeleniumPage
-from pages.playwright_page import PlaywrightPage
-from pages.base_page import BaseBrowser
+from pages.web.selenium_page import SeleniumPage
+from pages.web.playwright_page import PlaywrightPage
+from pages.web.base_page import BaseBrowser
 from pytest import Parser, FixtureRequest, fixture
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
