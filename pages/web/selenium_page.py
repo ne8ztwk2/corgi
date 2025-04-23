@@ -44,6 +44,22 @@ class SeleniumElement(BaseElement):
     def is_visible(self) -> bool:
         return self.element.is_displayed()
 
+    def is_enabled(self) -> bool:
+        return self.element.is_enabled()
+
+    def is_editable(self) -> bool:
+        return self.element.is_enabled() and self.element.get_attribute("readonly") in (
+            None,
+            "false",
+            "False",
+        )
+
+    def is_clickable(self) -> bool:
+        return self.element.is_displayed() and self.element.is_enabled()
+
+    def is_selected(self) -> bool:
+        return self.element.is_selected()
+
     def select_by_value(self, value: str):
         Select(self.element).select_by_value(value)
 

@@ -1,18 +1,19 @@
-from pages.dynamicid_page import DynamicidPage
+from pages.web.dynamicid_page import DynamicidPage
 
 import pytest
 
 
 @pytest.mark.usefixtures("basepage")
-class TestDynamicidPage(DynamicidPage):
+class TestDynamicidPage:
 
-    def setup_class(self):
+    @pytest.fixture(autouse=True)
+    def setup(self, basepage):
+        self.page = DynamicidPage(basepage)
+        self.page.open()
+        yield
 
-        self.page.goto(self.url)
-
-    def test_get_dynamicid(self):
-        _id = self.get_button_id()
-        assert _id is not None
-
-    def teardown_class(self):
-        self.page.quit()
+    def test_delay_input(self):
+        text = "test input"
+        self.page.click_button()
+        self.page.delay_input(text, 5.5)
+        self.page.get_value() == text

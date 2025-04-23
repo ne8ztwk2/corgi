@@ -44,6 +44,22 @@ class BaseElement(ABC):
         """判断元素是否可见"""
 
     @abstractmethod
+    def is_enabled(self) -> bool:
+        """判断元素是否启用"""
+
+    @abstractmethod
+    def is_editable(self) -> bool:
+        """判断元素是否可编辑"""
+
+    @abstractmethod
+    def is_clickable(self) -> bool:
+        """判断元素是否可点击"""
+
+    @abstractmethod
+    def is_selected(self) -> bool:
+        """判断元素是否被选中"""
+
+    @abstractmethod
     def get_attribute(self, attribute: str) -> str | None:
         """获取元素属性"""
 

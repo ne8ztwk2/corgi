@@ -1,24 +1,30 @@
 from pages.web.base_page import BasePage
-from typing import Self
 
 
 class DynamicidPage:
 
-    def __init__(self, page: BasePage):
+    def __init__(self, basepage: BasePage):
 
         self.url = "https://www.uitestingplayground.com/dynamicid"
-        self.page = page
+        self.basepage = basepage
 
         self.button_selector = ".btn.btn-primary"
+        self.delay = 3.5
 
-    @property
-    def get_button_id(self) -> str:
-        return self.page.find(self.button_selector).get_attribute("id")
+    def click_button(self):
+        self.basepage.find(self.button_selector).click()
+
+    def delay_input(self, text: str, time: float = None):
+        self.basepage.wait_editable(self.button_selector, time or self.delay).input(
+            text
+        )
+
+    def get_value(self) -> str:
+        return self.basepage.find(self.button_selector).get_attribute("value")
 
     @property
     def get_title(self) -> str:
-        return self.page.get_title()
+        return self.basepage.get_title()
 
-    def go(self) -> Self:
-        self.page.goto(self.url)
-        return self
+    def open(self):
+        self.basepage.goto(self.url)

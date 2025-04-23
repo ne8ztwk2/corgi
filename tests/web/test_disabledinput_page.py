@@ -1,13 +1,15 @@
-from pages.disabledinput_page import DisabledinputPage
+from pages.web.disabledinput_page import DisabledinputPage
 
 import pytest
 
 
 @pytest.mark.usefixtures("basepage")
-class TestDisabledinputPage(DisabledinputPage):
-
-    def setup_class(self):
-        self.page.goto("https://www.uitestingplayground.com/disabledinput")
+class TestDisabledinputPage:
+    @pytest.fixture(autouse=True)
+    def setup(self, basepage):
+        self.page = DisabledinputPage(basepage)
+        self.page.open()
+        yield
 
     def test_check_input_disabled(self):
         assert self.check_input_disabled()
